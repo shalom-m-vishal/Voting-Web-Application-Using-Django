@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+ <link rel="stylesheet" href="{% static 'contact.css' %}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <img src="{% static 'contactlogo.png' %}" alt="My image">
+  <title>Contact Us</title>
+</head>
+<body>
+<h2>For Any Queries</h2>
+  <h1>Contact Us</h1>
+  <form id="ContactForm" method="post">
+  {%csrf_token%}
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br>
+    <label for="subject">Subject:</label>
+    <input type="text" id="subject" name="subject" required><br>
+    <label for="message">Message:</label><br>
+    <textarea id="message" name="message" rows="4" required></textarea><br>
+    <button type="submit">Submit</button>
+    <footer>&copy; 2024 Voting System. All rights reserved.</footer>
+  </form>
+
+  <script>
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const formData = new FormData(form);
+      try {
+        const response = await fetch('your-server-endpoint', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await response.json();
+        alert(data.message); // Display success or error message
+        form.reset(); // Clear the form
+      } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again later.');
+      }
+    });
+  </script>
+</body>
+</html>
